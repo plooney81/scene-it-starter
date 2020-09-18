@@ -1,18 +1,28 @@
-function saveToWatchList(imdbID){
-  // console.log(imdbID);
-  const movie = movieData.find((currentMovie) =>{
-    return currentMovie.imdbID == imdbID;
-  });
+
+// function that takes in the movie we want to add to our localStorage
+function addMovieToLocalStorage(movie){
 
   let watchListJSON = localStorage.getItem('watchList');
   let watchList = JSON.parse(watchListJSON);
-
+  
+  // checks if watchList exists, if it doesn't, we initiate the empty array.
   if (!watchList){watchList = [];}
   watchList.push(movie);
 
   watchListJSON = JSON.stringify(watchList);
 
   localStorage.setItem('watchList', watchListJSON)
+
+}
+
+// function to add a movie to our local storage if the user clicks the add button
+function saveToWatchList(imdbID){
+  // console.log(imdbID);
+  const movie = movieData.find((currentMovie) =>{
+    return currentMovie.imdbID == imdbID;
+  });
+
+  addMovieToLocalStorage(movie);
 
   console.log(localStorage.getItem('watchList'));
 }
@@ -46,11 +56,15 @@ document.addEventListener('DOMContentLoaded', function(){
     }
 
     document.addEventListener('click', (e)=>{
-        e.preventDefault();
-        if(e.target.id === 'search'){
-            const movieContainer = document.querySelector('.movie-container');
-            movieContainer.innerHTML = renderMovies(movieData);
-            deleteFromWatchList();
+        if(e.target.id !== 'navLink'){
+          e.preventDefault();
+          if(e.target.id === 'search'){
+              const movieContainer = document.querySelector('.movie-container');
+              movieContainer.innerHTML = renderMovies(movieData);
+              deleteFromWatchList();
+          }else if(e.target.id === 'navLink'){
+            allowSubmit = true;
+          }
         }
     })
     
