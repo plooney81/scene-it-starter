@@ -1,14 +1,14 @@
-
+function saveToWatchList(imdbID){
+  console.log(imdbID);
+}
 
 document.addEventListener('DOMContentLoaded', function(){
-    function saveToWatchList(imbdID){
-        console.log(imbdID);
-    }
+
     
     function renderMovies(movieArray){
         const movieHtmlArray = movieArray.map((currentMovie) => {
 
-            console.log(currentMovie);
+            // console.log(currentMovie.imdbID);
             return `
             <div class="movie mr-1 mt-1 col-3">
             <div class="card" style="height: 18rem">
@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function(){
                 <p class='btn btn-secondary' id='movie-year' style="font-size: .75rem; padding: 0; margin: 0; height: 1.25rem;">${currentMovie.Year}</p>
               </div>
               <div class="card-body d-flex justify-content-center" style="padding: 0; margin: 0;">
-                <button class="btn btn-primary m-1 p-1" id="addMovieBtn" style="font-size: .75rem; height: 2rem;" onclick="saveToWatchList('${currentMovie.imbdID}')">Add</button>
+                <button class="btn btn-primary m-1 p-1 addButton" id="${currentMovie.imdbID}" style="font-size: .75rem; height: 2rem;" onClick="saveToWatchList('${currentMovie.imdbID}')">Add</button>
               </div>
             </div>
           </div>
@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function(){
         });
         return movieHtmlArray.join('');
     }
-
-
+    // couldn't get this to work------
+    // onClick="saveToWatchList('${currentMovie.imdbID}')"
 
     document.addEventListener('click', (e)=>{
         e.preventDefault();
