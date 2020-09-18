@@ -10,6 +10,7 @@ const pullFromLocal = ()=> {
 // function that takes in the movie we want to add to our localStorage
 function removeMovieFromLocalStorage(watchList, movie){
     let deleteIndex;
+
     for (let index = 0; index < watchList.length; index++){
         if(watchList[index].Title === movie.Title){
             deleteIndex = index;
