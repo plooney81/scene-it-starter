@@ -1,5 +1,24 @@
 function saveToWatchList(imdbID){
-  console.log(imdbID);
+  // console.log(imdbID);
+  const movie = movieData.find((currentMovie) =>{
+    return currentMovie.imdbID == imdbID;
+  });
+
+  let watchListJSON = localStorage.getItem('watchList');
+  let watchList = JSON.parse(watchListJSON);
+
+  if (!watchList){watchList = [];}
+  watchList.push(movie);
+
+  watchListJSON = JSON.stringify(watchList);
+
+  localStorage.setItem('watchList', watchListJSON)
+
+  console.log(localStorage.getItem('watchList'));
+}
+
+function deleteFromWatchList(){
+  localStorage.removeItem('watchList')
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -8,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function(){
     function renderMovies(movieArray){
         const movieHtmlArray = movieArray.map((currentMovie) => {
 
-            // console.log(currentMovie.imdbID);
             return `
             <div class="movie mr-1 mt-1 col-3">
             <div class="card" style="height: 18rem">
@@ -26,14 +44,13 @@ document.addEventListener('DOMContentLoaded', function(){
         });
         return movieHtmlArray.join('');
     }
-    // couldn't get this to work------
-    // onClick="saveToWatchList('${currentMovie.imdbID}')"
 
     document.addEventListener('click', (e)=>{
         e.preventDefault();
         if(e.target.id === 'search'){
             const movieContainer = document.querySelector('.movie-container');
             movieContainer.innerHTML = renderMovies(movieData);
+            deleteFromWatchList();
         }
     })
     
