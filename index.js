@@ -1,4 +1,4 @@
-
+let movieData;
 // function that takes in the movie we want to add to our localStorage
 function addMovieToLocalStorage(movie, imdbID){
 
@@ -8,7 +8,8 @@ function addMovieToLocalStorage(movie, imdbID){
   // checks if watchList exists, if it doesn't, we initiate the empty array.
   if (!watchList){watchList = [];}
   const isMovieInListAlready = watchList.find((watchListMovie)=> {
-    return watchListMovie.imdbID == imdbID;
+    // checks if there is one first, then if they are the same.
+    return watchListMovie.imdbID && watchListMovie.imdbID == imdbID;
   })
   if (!isMovieInListAlready){
     watchList.push(movie);
@@ -22,7 +23,6 @@ function addMovieToLocalStorage(movie, imdbID){
 
 // function to add a movie to our local storage if the user clicks the add button
 function saveToWatchList(imdbID){
-  // console.log(imdbID);
   const movie = movieData.find((currentMovie) =>{
     return currentMovie.imdbID == imdbID;
   });
@@ -61,16 +61,15 @@ document.addEventListener('DOMContentLoaded', function(){
     document.addEventListener('click', (e)=>{
         if(e.target.id !== 'navLink'){
           e.preventDefault();
-          const searchString = $('#search').val();
+          let searchString = $('.search-bar').val();
           let urlEncodedSearchString = encodeURIComponent(searchString);
-          let urlSearch = 'http://www.omdbapi.com/?apikey=59354c85&s=' + urlEncodedSearchString;
           if(e.target.id === 'search'){
               const movieContainer = document.querySelector('.movie-container');
-
-              axios.get(urlSearch)
+              axios.get("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString)
                 .then((response)=>{
-                  console.log(response.data);
+                  console.log(response.data.Search);
                   movieContainer.innerHTML = renderMovies(response.data.Search);
+                  movieData = response.data.Search;
                 })
           }else if(e.target.id === 'addButton'){
             e.target.style.display = 'none';
