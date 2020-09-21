@@ -61,10 +61,17 @@ document.addEventListener('DOMContentLoaded', function(){
     document.addEventListener('click', (e)=>{
         if(e.target.id !== 'navLink'){
           e.preventDefault();
+          const searchString = $('#search').val();
+          let urlEncodedSearchString = encodeURIComponent(searchString);
+          let urlSearch = 'http://www.omdbapi.com/?apikey=59354c85&s=' + urlEncodedSearchString;
           if(e.target.id === 'search'){
               const movieContainer = document.querySelector('.movie-container');
-              movieContainer.innerHTML = renderMovies(movieData);
-              
+
+              axios.get(urlSearch)
+                .then((response)=>{
+                  console.log(response.data);
+                  movieContainer.innerHTML = renderMovies(response.data.Search);
+                })
           }else if(e.target.id === 'addButton'){
             e.target.style.display = 'none';
           }
