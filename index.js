@@ -65,9 +65,8 @@ document.addEventListener('DOMContentLoaded', function(){
           let urlEncodedSearchString = encodeURIComponent(searchString);
           if(e.target.id === 'search'){
               const movieContainer = document.querySelector('.movie-container');
-              axios.get("http://www.omdbapi.com/?apikey=59354c85&s=" + urlEncodedSearchString)
+              axios.get("http://www.omdbapi.com/?i=tt3896198&apikey=bc114e0b&s=" + urlEncodedSearchString)
                 .then((response)=>{
-                  console.log(response.data.Search);
                   movieContainer.innerHTML = renderMovies(response.data.Search);
                   movieData = response.data.Search;
                 })
