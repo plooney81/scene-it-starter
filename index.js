@@ -41,7 +41,7 @@ function renderMovies(movieArray){
 
       return `
       <div class="movie mr-1 mt-1 col-3">
-      <div class="card" style="height: 18rem">
+      <div class="card">
         <img class="card-img-top" src="${currentMovie.Poster}" alt="Card image cap">
         <div class="card-body d-flex justify-content-around p-0 mt-1">
           <h7 class="card-title" id="movie-title" style="font-size: .75rem;">${currentMovie.Title}</h7>
